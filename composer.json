@@ -1,0 +1,26 @@
+{
+  "name": "murka/testtask",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+	{
+	  "name": "author's name",
+	  "email": "email@example.com"
+	}
+  ],
+  "require": {
+    "psr/log": "~1.0",
+	"predis/predis":"1.0.0",
+    "symfony/console":"2.6.0"
+  },
+  "require-dev": {
+      "phpunit/phpunit": "~4.0"
+  },
+  "autoload":{
+    "psr-4": {
+      "Score\\": "src/",
+      "Application\\": "app/"
+    }
+  }
+}
