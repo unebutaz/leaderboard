@@ -1,17 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergey
- * Date: 11.12.14
- * Time: 22:48
- */
 
 namespace Leaderboard\Period;
 
+/**
+ * Class Week
+ * @package Leaderboard\Period
+ */
 class Week extends Period
 {
-    const LABEL = "week";
+    /**
+     * @var string
+     */
+    protected $label = "week";
 
+    /**
+     * @return string
+     */
     public function getId()
     {
         return $this->date->format('W:Y');

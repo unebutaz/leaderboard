@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergey
- * Date: 14.12.14
- * Time: 2:27
- */
 
 namespace Leaderboard\Period;
 
+/**
+ * Class Period
+ * @package Leaderboard\Period
+ */
 abstract class Period
 {
+    /**
+     * @var
+     */
     protected $label;
 
     /**
@@ -17,6 +18,9 @@ abstract class Period
      */
     protected $date;
 
+    /**
+     * @param \DateTime $date
+     */
     public function __construct(\DateTime $date = null)
     {
         if (empty($date)) {
@@ -26,17 +30,24 @@ abstract class Period
         $this->date = $date;
     }
 
+    /**
+     * @return mixed
+     */
     public function getLabel()
     {
         return $this->label;
     }
 
-
+    /**
+     * @return mixed
+     */
     abstract public function getId();
 
-
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        return $this->label . ":" . $this->getId();
+        return $this->label.":".$this->getId();
     }
 }

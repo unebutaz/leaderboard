@@ -1,8 +1,7 @@
 {
   "name": "murka/testtask",
-  "description": "description_text",
+  "description": "Simple leaderboard implementation using Redis",
   "minimum-stability": "stable",
-  "license": "proprietary",
   "authors": [
 	{
 	  "name": "Sergey Yashchenko",

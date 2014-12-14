@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergey
- * Date: 11.12.14
- * Time: 11:09
- */
 
 namespace Leaderboard\Storage;
 
@@ -32,7 +26,6 @@ class RedisStorage implements StorageInterface
     {
         $this->client = $client;
     }
-
 
     /**
      * {@inheritdoc}

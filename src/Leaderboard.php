@@ -2,6 +2,8 @@
 
 namespace Leaderboard;
 
+use Leaderboard\Pagination\Paginatable;
+use Leaderboard\Period\Factory;
 use Leaderboard\Period\Period;
 use Leaderboard\Storage\StorageInterface;
 
@@ -16,9 +18,8 @@ use Leaderboard\Storage\StorageInterface;
  *
  * @package Leaderboard
  */
-class Leaderboard implements \IteratorAggregate, \Countable
+class Leaderboard extends Paginatable
 {
-
     /**
      * @var StorageInterface
      */
@@ -32,7 +33,7 @@ class Leaderboard implements \IteratorAggregate, \Countable
     /**
      * @var string
      */
-    private $label;
+    private $label = 'board';
 
     /**
      * @return string
@@ -43,7 +44,7 @@ class Leaderboard implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param string $label
+     * @param  string $label
      * @return $this
      */
     public function setLabel($label)
@@ -54,13 +55,16 @@ class Leaderboard implements \IteratorAggregate, \Countable
 
     /**
      * @param StorageInterface $storage
-     * @param Period  $period
+     * @param Period           $period
      */
     public function __construct(StorageInterface $storage, Period $period = null)
     {
+        if (empty($period)) {
+            $period = Factory::build('year');
+        }
+
         $this->period  = $period;
         $this->storage = $storage;
-        $this->label = 'dummy';
     }
 
     /**
@@ -101,32 +105,45 @@ class Leaderboard implements \IteratorAggregate, \Countable
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getKey()
     {
         return implode(':', array(
             $this->label,
             $this->period->getLabel(),
-            $this->period->getId()
+            $this->period->getId(),
         ));
     }
 
+    /**
+     * @param $method
+     * @param $arguments
+     * @return mixed
+     */
     public function __call($method, $arguments)
     {
         if (!method_exists($this->storage, $method) && !method_exists($this, $method)) {
             throw new \BadMethodCallException();
         }
-        var_dump($arguments);
+
         array_unshift($arguments, $this->getKey());
 
         return call_user_func_array(array($this->storage, $method), $arguments);
     }
 
-
-    public function getIterator()
+    /**
+     * @return \ArrayIterator
+     */
+    public function getIterator($offset = 0, $limit = -1)
     {
-        return new \ArrayIterator($this->find());
+        return new \ArrayIterator($this->find($offset, $limit));
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return $this->storage->count($this->getKey());

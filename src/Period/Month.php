@@ -1,19 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergey
- * Date: 14.12.14
- * Time: 18:34
- */
 
 namespace Leaderboard\Period;
 
-
+/**
+ * Class Month
+ * @package Leaderboard\Period
+ */
 class Month extends Period
 {
-
+    /**
+     * @var string
+     */
     protected $label = 'month';
 
+    /**
+     * @return string
+     */
     public function getId()
     {
         return $this->date->format('m:Y');

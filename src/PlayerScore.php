@@ -67,15 +67,24 @@ class PlayerScore
 
         $result = array();
 
-        foreach (PeriodFactory::getPeriods() as $period) {
+        foreach (PeriodFactory::getPeriods() as $type => $period) {
             $board = new Leaderboard(
                 $this->storage,
-                PeriodFactory::build($period)
+                PeriodFactory::build($type)
             );
 
-            $result[$period] = call_user_func_array(array($board, $method), $arguments);
+            $result[$type] = call_user_func_array(array($board, $method), $arguments);
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $member
+     * @return double
+     */
+    public function find($member)
+    {
+        return $this->findOne($member);
     }
 }

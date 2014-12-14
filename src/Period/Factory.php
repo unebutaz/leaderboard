@@ -2,8 +2,15 @@
 
 namespace Leaderboard\Period;
 
+/**
+ * Class Factory
+ * @package Leaderboard\Period
+ */
 final class Factory
 {
+    /**
+     * @var array
+     */
     private static $periods = array(
         'day'   => 'Leaderboard\Period\Day',
         'week'  => 'Leaderboard\Period\Week',
@@ -11,11 +18,19 @@ final class Factory
         'year'  => 'Leaderboard\Period\Year',
     );
 
+    /**
+     * @return array
+     */
     public static function getPeriods()
     {
         return self::$periods;
     }
 
+    /**
+     * @param $type
+     * @param \DateTime $date
+     * @return mixed
+     */
     public static function build($type, \DateTime $date = null)
     {
         if (!in_array($type, array_keys(self::$periods))) {

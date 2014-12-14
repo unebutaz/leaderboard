@@ -1,17 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergey
- * Date: 11.12.14
- * Time: 22:45
- */
 
 namespace Leaderboard\Period;
 
+/**
+ * Class Day
+ * @package Leaderboard\Period
+ */
 class Day extends Period
 {
+    /**
+     * @var string
+     */
     protected $label = "day";
 
+    /**
+     * @return string
+     */
     public function getId()
     {
         return $this->date->format('z:Y');
