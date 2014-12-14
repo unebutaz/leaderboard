@@ -10,8 +10,11 @@ namespace Leaderboard\Period;
 
 abstract class Period
 {
-    const LABEL = 'period';
+    protected $label;
 
+    /**
+     * @var \Datetime
+     */
     protected $date;
 
     public function __construct(\DateTime $date = null)
@@ -25,8 +28,15 @@ abstract class Period
 
     public function getLabel()
     {
-        return self::LABEL;
+        return $this->label;
     }
 
+
     abstract public function getId();
+
+
+    public function __toString()
+    {
+        return $this->label . ":" . $this->getId();
+    }
 }

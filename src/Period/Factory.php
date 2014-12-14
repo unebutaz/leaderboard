@@ -5,9 +5,10 @@ namespace Leaderboard\Period;
 final class Factory
 {
     private static $periods = array(
-        Day::LABEL  => 'Leaderboard\Period\Day',
-        Week::LABEL => 'Leaderboard\Period\Week',
-        Year::LABEL => 'Leaderboard\Period\Year'
+        'day'   => 'Leaderboard\Period\Day',
+        'week'  => 'Leaderboard\Period\Week',
+        'month' => 'Leaderboard\Period\Month',
+        'year'  => 'Leaderboard\Period\Year',
     );
 
     public static function getPeriods()

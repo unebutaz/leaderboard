@@ -4,12 +4,10 @@ namespace Leaderboard\Period;
 
 class Year extends Period
 {
-
-    const LABEL = "year";
+    protected $label = "year";
 
     public function getId()
     {
         return $this->date->format('Y');
     }
 }
-

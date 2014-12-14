@@ -10,7 +10,7 @@ namespace Leaderboard\Period;
 
 class Day extends Period
 {
-    const LABEL = "day";
+    protected $label = "day";
 
     public function getId()
     {
