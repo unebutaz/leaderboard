@@ -7,15 +7,14 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class IncrementScoreCommand extends Command
+class RemovePlayerCommand extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('score:increment')
-            ->setDescription("Increment user score.")
-            ->addArgument('user-name', InputArgument::REQUIRED, 'User name.')
-            ->addArgument('increment', InputArgument::OPTIONAL, 'Increment value.');
+            ->setName('score:remove')
+            ->setDescription('Remove player from rating.')
+            ->addArgument('user-name', InputArgument::REQUIRED, 'User name');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
