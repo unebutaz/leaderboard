@@ -8,7 +8,7 @@
 
 namespace Leaderboard\Storage;
 
-use \Predis;
+use Predis;
 
 /**
  * Class RedisScore
@@ -16,7 +16,6 @@ use \Predis;
  */
 class RedisStorage implements StorageInterface
 {
-
     const RANGE_COMMAND = 'ZRANGE';
     const INCREMENT_COMMAND = 'ZINCRBY';
     const OPTION_WITHSCORES = 'WITHSCORES';
@@ -34,13 +33,9 @@ class RedisStorage implements StorageInterface
         $this->client = $client;
     }
 
+
     /**
-     * Returns assoc array of member -> score pairs.
-     * Return for specified range.
-     *
-     * @param  int   $start
-     * @param  int   $stop
-     * @return mixed
+     * {@inheritdoc}
      */
     public function find($key, $start = 0, $stop = -1)
     {
@@ -54,7 +49,7 @@ class RedisStorage implements StorageInterface
                 $key,
                 $start,
                 $stop,
-                self::OPTION_WITHSCORES
+                self::OPTION_WITHSCORES,
             )
         );
 
@@ -62,23 +57,15 @@ class RedisStorage implements StorageInterface
     }
 
     /**
-     * Finds member score.
-     *
-     * @param $key
-     * @param $member
-     * @return string
+     * {@inheritdoc}
      */
     public function findOne($key, $member)
     {
-        return $this->client->zscore($key, $member);
+        return (double) $this->client->zscore($key, $member);
     }
 
     /**
-     * Set score for specified member.
-     * todo: update score if member exists, check redis behaviour
-     * @param $member
-     * @param $score
-     * @return int
+     * {@inheritdoc}
      */
     public function set($key, $member, $score)
     {
@@ -90,11 +77,15 @@ class RedisStorage implements StorageInterface
     }
 
     /**
-     * Increments members score by $increment.
-     *
-     * @param $member
-     * @param  int   $increment
-     * @return mixed
+     * {@inheritdoc}
+     */
+    public function get($key, $member)
+    {
+        return $this->client->zscore($key, $member);
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function increment($key, $member, $increment = 1)
     {
@@ -107,7 +98,7 @@ class RedisStorage implements StorageInterface
             array(
                 $key,
                 $increment,
-                $member
+                $member,
             )
         );
 
@@ -115,27 +106,28 @@ class RedisStorage implements StorageInterface
     }
 
     /**
-     * Decrements members rating by
-     *
-     * @param $member
-     * @param  int   $decrement
-     * @return mixed
+     * {@inheritdoc}
      */
     public function decrement($key, $member, $decrement = 1)
     {
         $decrement = -abs($decrement);
 
-        return $this->increment($member, $decrement);
+        return $this->increment($key, $member, $decrement);
     }
 
     /**
-     * Removes member from set.
-     *
-     * @param $member
-     * @return int
+     * {@inheritdoc}
      */
     public function remove($key, $member)
     {
-        return $this->client->zrem($key, $member);
+        return (bool) $this->client->zrem($key, $member);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count($key)
+    {
+        return $this->client->zcard($key);
     }
 }
