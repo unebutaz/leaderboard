@@ -5,8 +5,8 @@
   "license": "proprietary",
   "authors": [
 	{
-	  "name": "author's name",
-	  "email": "email@example.com"
+	  "name": "Sergey Yashchenko",
+	  "email": "yashenko.s@gmail.com"
 	}
   ],
   "require": {
@@ -19,7 +19,7 @@
   },
   "autoload":{
     "psr-4": {
-      "Score\\": "src/",
+      "Leaderboard\\": "src/",
       "Application\\": "app/"
     }
   }

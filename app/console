@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+namespace Application;
+
+$loader = require(__DIR__ . "/../vendor/autoload.php");
+
+
+use Application\Console;
+
+$app = new Console\Application();
+$app->run();
