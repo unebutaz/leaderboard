@@ -1,12 +1,20 @@
 #!/usr/bin/env php
 <?php
-
-namespace Application;
+set_time_limit(0);
 
 $loader = require(__DIR__ . "/../vendor/autoload.php");
 
-
 use Application\Console;
+use \Symfony\Component\DependencyInjection\ContainerBuilder;
+use \Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use \Symfony\Component\Config\FileLocator;
 
 $app = new Console\Application();
+
+$container = new ContainerBuilder();
+$loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+$loader->load('services.yml');
+
+$app->setContainer($container);
+
 $app->run();

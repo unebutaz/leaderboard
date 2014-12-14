@@ -1,0 +1,9 @@
+parameters:
+    redis.url: 'tcp://127.0.0.1:6379'
+services:
+    redis_client:
+        class:     \Predis\Client
+        arguments: ['%redis.url%']
+    storage:
+        class:     \Leaderboard\Storage\RedisStorage
+        arguments: ["@redis_client"]
