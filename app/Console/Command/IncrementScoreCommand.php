@@ -2,6 +2,7 @@
 
 namespace Application\Console\Command;
 
+use Leaderboard\PlayerScore;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,10 +19,19 @@ class IncrementScoreCommand extends Command
             ->addArgument('increment', InputArgument::OPTIONAL, 'Increment value.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input)
     {
         $storage = $this->getApplication()
             ->getContainer()
             ->get('storage');
+
+        $increment = !empty($input->getArgument('increment'))
+            ? $input->getArgument('increment')
+            : 1;
+
+        (new PlayerScore($storage))->increment(
+            $input->getArgument('user-name'),
+            $increment
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Application\Console\Command;
 
+use Leaderboard\PlayerScore;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,7 +16,7 @@ class DecrementScoreCommand extends Command
             ->setName('score:decrement')
             ->setDescription("Decrement user score.")
             ->addArgument('user-name', InputArgument::REQUIRED, 'User name.')
-            ->addArgument('score', InputArgument::OPTIONAL, 'Decrement value.');
+            ->addArgument('decrement', InputArgument::OPTIONAL, 'Decrement value.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -23,5 +24,14 @@ class DecrementScoreCommand extends Command
         $storage = $this->getApplication()
             ->getContainer()
             ->get('storage');
+
+        $decrement = !empty($input->getArgument('decrement'))
+            ? $input->getArgument('decrement')
+            : 1;
+
+        (new PlayerScore($storage))->increment(
+            $input->getArgument('user-name'),
+            $decrement
+        );
     }
 }

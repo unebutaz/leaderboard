@@ -2,6 +2,7 @@
 
 namespace Application\Console\Command;
 
+use Leaderboard\PlayerScore;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,10 +13,9 @@ class GetScoreCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('score:set')
+            ->setName('score:get')
             ->setDescription("Set specified score for user")
-            ->addArgument('user-name', InputArgument::REQUIRED, 'Name of user to set Score for.')
-            ->addArgument('score', InputArgument::REQUIRED, 'Score value');
+            ->addArgument('user-name', InputArgument::REQUIRED, 'Name of user to retrieve Score for.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -23,5 +23,12 @@ class GetScoreCommand extends Command
         $storage = $this->getApplication()
             ->getContainer()
             ->get('storage');
+
+        $result = (new PlayerScore($storage))
+            ->find($input->getArgument('user-name'));
+
+        foreach ($result as $period => $score) {
+            $output->writeln("$period:$score");
+        }
     }
 }

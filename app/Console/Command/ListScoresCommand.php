@@ -5,6 +5,7 @@ namespace Application\Console\Command;
 
 use Leaderboard\Leaderboard;
 use Leaderboard\Pagination\Pagination;
+use Leaderboard\Period\Factory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +18,7 @@ class ListScoresCommand extends Command
         $this
             ->setName('score:list')
             ->setDescription('List all scores')
-            ->addOption('period', 'p', InputArgument::OPTIONAL, 'Specify period for leaderboard.')
+            ->addOption('period', 'p', InputArgument::OPTIONAL, 'Specify period for leaderboard.', 'year')
             ->addOption('date', 'd', InputArgument::OPTIONAL, 'Date for period.')
             ->addOption('page', 'P', InputArgument::OPTIONAL, 'Page to show', 1);
     }
@@ -30,16 +31,18 @@ class ListScoresCommand extends Command
             ->getContainer()
             ->get('storage');
 
+        $period = Factory::build($input->getOption('period'), $input->getOption('date'));
+
         $pagination = new Pagination(
-            new Leaderboard($storage)
+            new Leaderboard($storage, $period)
         );
 
-        if ($page > count($pagination) || $page < 1) {
+        if (($page > 1 && $page > count($pagination)) || $page < 1) {
             throw new \OutOfBoundsException("Page number $page doesn't exists.");
         }
 
         foreach ($pagination->getPage($page) as $player => $score) {
-            $output->writeln("$player: $score");
+            $output->writeln("$player, {$period}: $score");
         }
 
         $output->writeln("Page $page of {$pagination->count()}");
