@@ -20,4 +20,9 @@ class Year extends Period
     {
         return $this->date->format('Y');
     }
+
+    public function __toString()
+    {
+        return 'Year ' . $this->date->format('Y');
+    }
 }

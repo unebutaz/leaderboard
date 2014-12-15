@@ -20,4 +20,9 @@ class Day extends Period
     {
         return $this->date->format('z:Y');
     }
+
+    public function __toString()
+    {
+        return $this->date->format('Y-m-d');
+    }
 }

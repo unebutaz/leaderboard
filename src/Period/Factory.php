@@ -31,10 +31,14 @@ final class Factory
      * @param \DateTime $date
      * @return mixed
      */
-    public static function build($type, \DateTime $date = null)
+    public static function build($type, $date = null)
     {
         if (!in_array($type, array_keys(self::$periods))) {
             throw new \InvalidArgumentException("Given period type ($type) is invalid.");
+        }
+
+        if (!$date instanceof \DateTime) {
+            $date = new \DateTime($date);
         }
 
         $period = self::$periods[$type];

@@ -46,8 +46,5 @@ abstract class Period
     /**
      * @return string
      */
-    public function __toString()
-    {
-        return $this->label.":".$this->getId();
-    }
+    abstract public function __toString();
 }
