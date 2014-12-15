@@ -28,7 +28,7 @@ final class Factory
 
     /**
      * @param $type
-     * @param \DateTime $date
+     * @param  \DateTime $date
      * @return mixed
      */
     public static function build($type, $date = null)

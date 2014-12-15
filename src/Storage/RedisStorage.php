@@ -10,7 +10,7 @@ use Predis;
  */
 class RedisStorage implements StorageInterface
 {
-    const RANGE_COMMAND = 'ZRANGE';
+    const RANGE_COMMAND     = 'ZREVRANGE';
     const INCREMENT_COMMAND = 'ZINCRBY';
     const OPTION_WITHSCORES = 'WITHSCORES';
 
@@ -83,7 +83,7 @@ class RedisStorage implements StorageInterface
     public function increment($key, $member, $increment = 1)
     {
         if (!is_numeric($increment)) {
-            throw new \InvalidArgumentException("Second parameter must be numeric");
+            throw new \InvalidArgumentException("Increment parameter must be numeric, ".gettype($increment)." given.");
         }
 
         $command = $this->client->createCommand(

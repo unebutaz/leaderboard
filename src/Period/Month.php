@@ -13,7 +13,6 @@ class Month extends Period
      */
     protected $label = 'month';
 
-
     /**
      * @return string
      */

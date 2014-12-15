@@ -23,6 +23,6 @@ class Week extends Period
 
     public function __toString()
     {
-        return $this->date->format('W') . " week of " . $this->date->format('Y');
+        return $this->date->format('W')." week of ".$this->date->format('Y');
     }
 }

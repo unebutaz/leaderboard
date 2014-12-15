@@ -2,6 +2,6 @@
 
 namespace Leaderboard\Pagination;
 
-abstract class Paginatable implements \IteratorAggregate, \Countable, \Traversable
+abstract class Paginatable implements \IteratorAggregate, \Countable
 {
 }

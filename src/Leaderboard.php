@@ -50,6 +50,7 @@ class Leaderboard extends Paginatable
     public function setLabel($label)
     {
         $this->label = $label;
+
         return $this;
     }
 

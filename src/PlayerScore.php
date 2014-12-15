@@ -80,8 +80,8 @@ class PlayerScore
     }
 
     /**
-     * @param string $member
-     * @return double
+     * @param  string $member
+     * @return array
      */
     public function find($member)
     {
