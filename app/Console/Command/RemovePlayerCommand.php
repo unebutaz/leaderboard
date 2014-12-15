@@ -2,6 +2,7 @@
 
 namespace Application\Console\Command;
 
+use Leaderboard\PlayerScore;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -22,5 +23,8 @@ class RemovePlayerCommand extends Command
         $storage = $this->getApplication()
             ->getContainer()
             ->get('storage');
+
+        (new PlayerScore($storage))
+            ->remove($input->getArgument('user-name'));
     }
 }
